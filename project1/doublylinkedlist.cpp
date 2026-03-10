@@ -3,38 +3,45 @@
 
 #include "doublylinkedlist.h"
 
-DoublyLinkedList::DoublyLinkedList() 
+DoublyLinkedList::DoublyLinkedList()
 {
 	head = NULL;
 	tail = NULL;
 }
 
-DoublyLinkedList::~DoublyLinkedList() 
+DoublyLinkedList::~DoublyLinkedList()
 {
-
 }
 
-void DoublyLinkedList::addNewNodeToFront(Node * newNode) {
-	if(head == NULL && tail == NULL) {
+void DoublyLinkedList::addNewNodeToFront(Node *newNode)
+{
+	if (head == NULL && tail == NULL)
+	{
 		head = tail = newNode;
-	} else {
+	}
+	else
+	{
 		head->prev = newNode;
 		newNode->next = head;
 		head = newNode;
 	}
 }
 
-void DoublyLinkedList::addNewNodeToBack(Node * newNode) {
-	if(head == NULL && tail == NULL) {
+void DoublyLinkedList::addNewNodeToBack(Node *newNode)
+{
+	if (head == NULL && tail == NULL)
+	{
 		head = tail = newNode;
-	} else {
+	}
+	else
+	{
 		tail->next = newNode;
 		newNode->prev = tail;
 		tail = newNode;
 	}
 }
 
-Node* DoublyLinkedList::removeNodeFromFront()
+Node *DoublyLinkedList::removeNodeFromFront()
 {
 	Node *tempNode;
 
@@ -49,50 +56,175 @@ void DoublyLinkedList::displayDoublyLinkedList()
 
 	tempNode = head;
 	while (tempNode != NULL)
-    {
-        cout << tempNode->value << " ";
-        tempNode = tempNode->next;
-    }
+	{
+		cout << tempNode->value << " ";
+		tempNode = tempNode->next;
+	}
 }
 
+/*This function prints a pictorial representation of the doubly linked list.
+For each node, it displays the node's memory address, the address of the
+previous node, the stored value, and the address of the next node.*/
 void DoublyLinkedList::drawDoublyLinkedList()
 {
-	//create a pointer named tempNode that starts at head
-  Node* tempNode = head; 
-	//while tempNode is not equal NULL do the following loop
-   while (tempNode != NULL)
-   {
-	//print out current address of tempNode
-	cout << "[address: " << tempNode 
-		//if tempNode points to previous then tempNode points to previous address, if not, value is 0
-		 << ", prev: " << (tempNode->prev ? tempNode->prev : 0)  
-		 //print out value stored at tempNode
-		 << ", value: " << tempNode->value
-		 //if tempNode points to next then tempNode points to next address, if not, value is 0
-		 << ", next: " << (tempNode->next ? tempNode->next : 0)
-		 << "]" << endl;
+	/*Create a temporary pointer that starts at the head of the list.
+	This pointer will be used to traverse the doubly linked list
+	without modifying the actual head pointer.*/
+	Node *tempNode = head;
 
-    tempNode = tempNode->next;
-   }
+	// Traverse the list until we reach the end (NULL).
+	while (tempNode != NULL)
+	{
+		// Print the memory address of the current node
+		cout << "[address: " << tempNode
+
+			 // Print the address of the previous node.
+			 // If there is no previous nod (prev == NULL), print 0 to indicate beginning of the list.
+			 << ", prev: " << (tempNode->prev ? tempNode->prev : 0)
+
+			 // Print the value stored in the current node.
+			 << ", value: " << tempNode->value
+
+			 // Print the address of the next node.
+			 // If there is no next node (next == NULL), print 0 to indicate end of list
+			 << ", next: " << (tempNode->next ? tempNode->next : 0)
+
+			 << "]" << endl;
+
+		/*Move the pointer to the next node in the list.
+		This allows us to continue traversing the list.*/
+		tempNode = tempNode->next;
+	}
 }
 
+/*This function checks whether the doubly linked list forms a palindrome.
+It compares node values from the front and back simultaneously
+and returns true if all matching pairs are equal*/
 bool DoublyLinkedList::isPalindrome()
 {
-	//check if the list is empty; if there are no nodes, head doesn't point to anything & list is empty
-	if(head == NULL) {
+	// An empty list is considered a palindrome.
+	if (head == NULL)
+	{
 		return true;
 	}
-	
-	Node* left = head;
-	Node* right = tail; 
-while(true){
-	if(left->value != right->value) {
-		return false;
+	/*Use two pointers:
+	left starts at the front of the list,
+	right starts at the back of the list.*/
+	Node *left = head;
+	Node *right = tail;
+
+	/*Compare matching noes from the outside moving in.
+	Stop when the pointers meet or cross.*/
+	while (left != right && left->prev != right)
+	{
+		if (left->value != right->value)
+		{
+			return false;
+		}
+
+		// Move both pointers toward the middle of the list
+		left = left->next;
+		right = right->prev;
 	}
-	
-}
-	
+
+	// If all matching pars were equal, the list is a palindrome.
+	return true;
 }
 
+/*This function splits the doubly linked list into n 
+evenly sized sublists.If the list cannot be evenly divided
+or n is invalid, it prints "List cannot be processed." */
+void DoublyLinkedList::split(int n)
+{
+	// Creat a temporary pointer to navigate the list.
+	Node *tempNode = head;
+
+	// count stores the total number of nodes in the list.
+	int count = 0;
+
+	/*subListSize stores how many nodes should appear in
+	each evenly split sublist.*/
+	int subListSize = 0;
+
+	// Step 1: Counts the number of nodes in the list
+	while (tempNode != NULL)
+	{
+		count++;
+		tempNode = tempNode->next;
+	}
+
+	/*Step 2: Validate whether the list can be split evenly
+	The split cannot be proccessed if:
+	1. n is less than 1
+	2. n is greater than the number of nodes
+	3. the list size is not evenly divisable by n*/
+	if (n < 1 || n > count || count % n != 0)
+	{
+		cout << "List cannot be processed." << endl;
+		return;
+	}
+	//Step 3: Compute the size of each sublist
+	else
+	{
+		subListSize = count / n;
+		cout << n << " evenly split sub-doubly linked lists:" << endl;
+	}
+// Rest tempNode back to the head so the list can be gone over again.
+	tempNode = head;
+
+	/*Step 4: Print the list in equal partitions
+	Outer loop controls how many sublists are printed*/
+	for (int i = 0; i < n; i++)
+	{
+		//Inner loop prints the nodes belonging to one sublist
+		for (int j = 0; j < subListSize; j++)
+		{
+			cout << tempNode->value << " ";
+			tempNode = tempNode->next;
+		}
+
+		//Move to the next line before printing another list.
+		cout << endl;
+	}
+}
+
+/*This function inserts a new node before the first node whose value matches val.
+If the targe value is found, the new node is linked into the list;
+otherwise the list remains unchanged.*/
+void DoublyLinkedList::addNewNodeBeforeTargetNode(Node *newNode, int val)
+{
+	//Start at the head of the list and search for the target value
+	Node *tempNode = head;
+
+	//Navigate the list until the target node is found or the end is reached.
+	while (tempNode != NULL)
+	{
+		//If the target value is found, insert newNode before tempNode.
+		if (tempNode->value == val)
+		{
+			//Special case: Inserting before the head node
+			if (tempNode == head)
+			{
+				newNode->prev = NULL; //new head has no previous node
+				newNode->next = head; //link new node to old head
+				head->prev = newNode; // old head points back to new node
+				head = newNode; 	  //update head to the new front node
+			}
+			//Normal Case: insert before a node in the middle of the list
+			else
+			{
+				newNode->prev = tempNode->prev; //link new node to previous node
+				newNode->next = tempNode;       //link new node to target node
+				tempNode->prev->next = newNode; //previous node points forward to new node
+				tempNode->prev = newNode;       //target node points back to new node
+			}
+			//Stop once insertion is complete.
+			return;
+		}
+		//move to next node if target has not been found
+		tempNode = tempNode->next;
+	}
+	//If target is not found, no changes are made to the list
+}
 
 #endif
