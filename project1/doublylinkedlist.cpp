@@ -1,3 +1,20 @@
+/*********************************************************************
+University of Arkansas at Little Rock
+Department of Computer Science
+CPSI 28003 - 9S1: Algorithms
+Spring 2026
+Project 1: Doubly Linked List
+Due Date: March 10, 2026, Tuesday
+Name: Jessi Lewis
+ID (Last 4 Digits):39929
+Description of the Program:
+Implementation of the DoublyLinkedList class. This file
+contains the logic for the drawing of the address, palindrome
+detection, splitting a list into equal sublists, and inserting
+noes before a target node.
+Date Revised: 9 March 2026
+*********************************************************************/
+
 #ifndef DOUBLYLINKEDLIST_CPP
 #define DOUBLYLINKEDLIST_CPP
 

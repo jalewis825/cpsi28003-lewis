@@ -1,3 +1,22 @@
+/*********************************************************************
+University of Arkansas at Little Rock
+Department of Computer Science
+CPSI 28003 - 9S1: Algorithms
+Spring 2026
+Project 1: Doubly Linked List
+Due Date: March 10, 2026, Tuesday
+Name: Jessi Lewis
+ID (Last 4 Digits):39929
+Description of the Program:
+Main driver program used to test the functionality of the
+DoublyLinkedList class including drawing a pictorial view
+of the list with node addresses, palindrome detection,
+splitting the list into evenly sized sublists, and inserting
+a new node before a target node.
+Date Written: 08 March 2026
+Date Revised: 09 March 2026
+*********************************************************************/
+
 #include <iostream>
 using namespace std;
 
@@ -6,9 +25,9 @@ using namespace std;
 
 int main()
 {
-	// =========================================================
-	// Test 1: drawDoublyLinkedList()
-	// =========================================================
+	/**********************************************************
+	 Test 1: drawDoublyLinkedList()
+	 *********************************************************/
 	cout << "Test 1: drawDoublyLinkedList()" << endl;
 
 	DoublyLinkedList Dll_0;
@@ -28,9 +47,9 @@ int main()
 	Dll_0.drawDoublyLinkedList();
 	cout << endl;
 
-	// =========================================================
-	// Test 2: isPalindrome() - should print 0
-	// =========================================================
+	/**********************************************************
+	 Test 2: isPalindrome() - should print 0
+	 *********************************************************/
 	cout << "Test 2: isPalindrome() non-palindrome" << endl;
 
 	DoublyLinkedList Dll_1;
@@ -47,11 +66,12 @@ int main()
 	Dll_1.addNewNodeToFront(&n14);
 	Dll_1.addNewNodeToFront(&n15);
 
-	cout << Dll_1.isPalindrome() << endl << endl;
+	cout << Dll_1.isPalindrome() << endl
+		 << endl;
 
-	// =========================================================
-	// Test 3: isPalindrome() - should print 1
-	// =========================================================
+	/**********************************************************
+	 Test 3: isPalindrome() - should print 1
+	 *********************************************************/
 	cout << "Test 3: isPalindrome() palindrome" << endl;
 
 	DoublyLinkedList Dll_2;
@@ -66,11 +86,12 @@ int main()
 	Dll_2.addNewNodeToFront(&n23);
 	Dll_2.addNewNodeToFront(&n24);
 
-	cout << Dll_2.isPalindrome() << endl << endl;
+	cout << Dll_2.isPalindrome() << endl
+		 << endl;
 
-	// =========================================================
-	// Test 4: split(3) with 6 nodes
-	// =========================================================
+	/**********************************************************
+	 Test 4: split(3) with 6 nodes
+	 *********************************************************/
 	cout << "Test 4: split(3) with 6 nodes" << endl;
 
 	DoublyLinkedList *Dll_3;
@@ -93,9 +114,9 @@ int main()
 	Dll_3->split(3);
 	cout << endl;
 
-	// =========================================================
-	// Test 5: split(3) with 7 nodes - cannot be processed
-	// =========================================================
+	/**********************************************************
+	 Test 5: split(3) with 7 nodes - cannot be processed
+	 *********************************************************/
 	cout << "Test 5: split(3) with 7 nodes" << endl;
 
 	DoublyLinkedList *Dll_4;
@@ -120,10 +141,10 @@ int main()
 	Dll_4->split(3);
 	cout << endl;
 
-	// =========================================================
-	// Test 6: addNewNodeBeforeTargetNode()
-	// Expected: 11 22 33 77 44 55 66
-	// =========================================================
+	/**********************************************************
+	 Test 6: addNewNodeBeforeTargetNode()
+	 Expected: 11 22 33 77 44 55 66
+	 *********************************************************/
 	cout << "Test 6: addNewNodeBeforeTargetNode()" << endl;
 
 	DoublyLinkedList *Dll_5;
@@ -150,7 +171,8 @@ int main()
 	Dll_5->addNewNodeBeforeTargetNode(&n58, 29);
 
 	Dll_5->displayDoublyLinkedList();
-	cout << endl << endl;
+	cout << endl
+		 << endl;
 
 	system("PAUSE");
 	return 0;
